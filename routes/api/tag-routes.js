@@ -7,8 +7,8 @@ router.get('/', async (req, res) => {
   try {
 const getTags = await Tag.findAll({
   include : [{ model: Product}]
-})
-res.status(200).json(getTags)
+});
+res.json(getTags)
   } catch (err) {
     res.status(500).json(err)
   }
@@ -18,9 +18,9 @@ res.status(200).json(getTags)
 
 router.get('/:id', async (req, res) => {
   try {
-    const oneTag = await Tag.findByPk({
+    const oneTag = await Tag.findByPk(req.params.id, {
       include : [{ model : Product }]
-    })
+    });
 res.status(200).json(oneTag)
   } catch (err) {
     res.status(500).json(err)
