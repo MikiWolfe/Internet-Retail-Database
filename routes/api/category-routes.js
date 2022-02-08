@@ -5,13 +5,16 @@ const { Category, Product } = require('../../models');
 
 router.get('/', async (req, res) => {
   try {const categories = await Category.findAll({
-    include: [{ model: Product}]
+    attributes:['id', 'category_name'],
+    include: [
+      { model: Product, attributes: ["id", "product_name", "price", "stock", "category_id"]}
+    ]
   });
   res.status(200).json(categories)
 } catch(err) {
   res.status(500).json(err)
 }
-
+// Forigne Key Goes Here
   // find all categories
   // be sure to include its associated Products
 });
@@ -32,21 +35,20 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated Products
 });
 
-router.post('/', async (req, res) => {
-try {
-  const category = await Category.create({
+router.post('/', (req, res) => {
+
+  Category.create({
     // creat new category here
     // username: req.body.username,
     // email: req.body.email,
     // password: req.body.password,
     // numberOfPets: req.body.numberOfPets,
+    category_name : req.body.category_name
+  })
+  .then(dbCategoryData => res.json(dbCategoryData))
+  .catch(err => console.log(err))
+  
 
-  });
-  res.status(200).json(category);
-} catch (err)
-{
-  res.status(500).json(err)
-}
 });
 
   // update a category by its `id` value
