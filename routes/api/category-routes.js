@@ -14,18 +14,21 @@ router.get('/', async (req, res) => {
 } catch(err) {
   res.status(500).json(err)
 }
-// Forigne Key Goes Here
-  // find all categories
-  // be sure to include its associated Products
+
 });
 
 router.get('/:id', async (req, res) => {
   try {
-    const category = await Category.fideByPk(req.params.id);
-    if (!category){
-      res.status(404).json({ message :"No category found with this ID"})
-      return;
-    }
+    const category = await Category.findOne({
+      where: {
+        id: req.params.id
+      },
+      attributes:['id', 'category_name'],
+      include: [
+        { model: Product, attributes: ["id", "product_name", "price", "stock", "category_id"]}
+      ]
+    })
+
     res.status(200).json(category)
   }
   catch (err){
@@ -69,15 +72,11 @@ res.status(500).json(err)
  // delete a category by its `id` value
 router.delete('/:id', async (req, res) => {
     try {
-const category = await Category.delete(req.body, {
+const category = await Category.destroy({
   where: {
     id: req.params.id,
   }
 }) 
-if (!category[0]){
-  res.status(404).json({message: 'No category with this id found'})
-  return
-}
 res.status(200).json(category);
   }
   catch (err) {
