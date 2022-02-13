@@ -44,7 +44,7 @@ GitHub profile: https://github.com/MikiWolfe
 
 
 ### Link to Deployed Site
-Link to the deployed site: None
+Link to the walk through video: https://watch.screencastify.com/v/wH3s4Kc5y3I0kNtQj1Ac
 Link to the repo: https://github.com/MikiWolfe/Internet-Retail-Database
 
 ### Image of application
